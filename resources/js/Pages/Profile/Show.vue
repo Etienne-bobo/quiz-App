@@ -1,5 +1,7 @@
 <template>
-    <app-layout>
+<v-app>
+    <app-layout />
+    <v-main>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Profile
@@ -33,7 +35,8 @@
                 <delete-user-form class="mt-10 sm:mt-0" />
             </div>
         </div>
-    </app-layout>
+    </v-main>
+</v-app>
 </template>
 
 <script>
