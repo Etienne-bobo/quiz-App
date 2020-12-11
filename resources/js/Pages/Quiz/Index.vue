@@ -13,23 +13,23 @@
           List of All Quizzes
         </v-alert>
         <v-row no-gutters>
-          <v-col v-for="(data, id) in quizzes" :key="id" cols="12" sm="4">
+          <v-col v-for="(quiz, id) in quizzes" :key="id" cols="12" sm="4">
             <v-card class="mx-auto mb-6" max-width="344">
               <v-card-text>
                 <p class="display-1 text--primary">
-                  {{ data.name }}
+                  {{ quiz.name }}
                 </p>
                 <div class="text--primary">
-                  {{ data.description }}
+                  {{ quiz.description }}
                 </div>
                 <div class="text--primary mt-6">
                   <span>Duration:</span>
-                  {{ data.minutes }}
+                  {{ quiz.minutes }}
                 </div>
               </v-card-text>
               <v-card-actions>
-                <inertia-link :href="route('quiz.edit', data.id)">
-                  <v-btn @click="edit(data)" text color="teal white--text">
+                <inertia-link :href="route('quiz.edit', quiz.id)">
+                  <v-btn @click="edit(quiz)" text color="teal white--text">
                     Edit
                   </v-btn>
                 </inertia-link>

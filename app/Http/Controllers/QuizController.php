@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Models\Quiz;
 
 class QuizController extends Controller
@@ -82,12 +83,12 @@ class QuizController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $quiz = Category::find($id);
+        $quiz = Quiz::find($id);
         $quiz-> name = $request->get('name');
         $quiz-> description = $request->get('description');
         $quiz-> minutes = $request->get('minutes');
         $quiz->save();
-        return redirect()->with('message', 'Quiz updated ....');
+        return Redirect::route('quiz.index')->with('message', 'Quiz updated ....');
     }
 
     /**
@@ -96,8 +97,10 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Quiz $quiz)
     {
-        //
+        $quiz->delete();
+
+        return Redirect::back()->with('message', 'Success Quiz deleted.');
     }
 }
