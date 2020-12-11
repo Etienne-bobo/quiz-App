@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\Quiz;
 
 class QuizController extends Controller
 {
@@ -13,7 +14,8 @@ class QuizController extends Controller
      */
     public function index()
     {
-        //
+        $quizzes = Quiz::latest()->get();
+        return Inertia::render('Quiz/Index', ['quizzes' => $quizzes]);
     }
 
     /**
@@ -23,7 +25,7 @@ class QuizController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Quiz/Create');
     }
 
     /**
@@ -34,7 +36,12 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         Quiz::create([
+             'name' => $request->get('name'),
+             'description' => $request->get('description'),
+             'minutes' => $request->get('minutes')
+         ]);
+         return redirect()->back()->with('message', 'Quiz created...');
     }
 
     /**
@@ -54,9 +61,16 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Quiz $quiz)
     {
-        //
+        return Inertia::render('Quiz/Edit', [
+            'quiz' => [
+                'id' => $quiz->id,
+                'name' => $quiz->name,
+                'description' => $quiz->description,
+                'minutes' => $quiz->minutes,
+            ],
+        ]);
     }
 
     /**
@@ -68,7 +82,12 @@ class QuizController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $quiz = Category::find($id);
+        $quiz-> name = $request->get('name');
+        $quiz-> description = $request->get('description');
+        $quiz-> minutes = $request->get('minutes');
+        $quiz->save();
+        return redirect()->with('message', 'Quiz updated ....');
     }
 
     /**
