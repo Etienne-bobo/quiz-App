@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\QuestionController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +24,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::resource('quiz', QuizController::class);
+Route::resource('question', QuestionController::class);

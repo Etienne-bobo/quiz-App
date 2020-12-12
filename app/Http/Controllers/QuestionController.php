@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\Question;
+use App\Models\Quiz;
 
 class QuestionController extends Controller
 {
@@ -13,7 +17,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+       // $questions = Question::latest()->get();
+        //return Inertia::render('Question/Index', ['questions' => $questions]);
     }
 
     /**
@@ -23,7 +28,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        $quizzes = Quiz::latest()->get();
+        return Inertia::render('Question/Create', ['quizzes' => $quizzes]);
     }
 
     /**

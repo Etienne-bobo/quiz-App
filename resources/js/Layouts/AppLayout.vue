@@ -78,7 +78,7 @@
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>
-                <h3 class="font-weight-thin">Dashboard</h3>
+                <h3 class="font-weight-thin">QuiZy</h3>
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -110,12 +110,12 @@
         </v-list-item>
         <v-divider></v-divider>
         <v-list>
-          <v-list-item-group v-model="status" mandatory color="success">
-            <v-list-item v-for="(item, i) in items" :key="i">
+          <v-list-item-group v-model="status" color="success">
+            <v-list-item v-for="(item, i) in items" :key="i" :href="item.path" >
               <v-list-item-icon>
                 <v-icon v-text="item.icon"></v-icon>
               </v-list-item-icon>
-              <v-list-item-content>
+              <v-list-item-content >
                 <v-list-item-title v-text="item.title"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
@@ -146,40 +146,30 @@ export default {
       return this.$vuetify.breakpoint.smAndDown || this.toggleMini;
     },
     buttonText() {
-      return !this.$vuetify.theme.dark ? "Mode nuit" : "Mode jour";
+      return !this.$vuetify.theme.dark ? "Go dark" : "Go light";
     },
   },
   data: () => ({
-    status: 1,
     sidebarMenu: true,
     toggleMini: false,
     items: [
       {
         icon: "mdi-google-analytics",
-        title: "Statistiques",
-        path: "statistics",
+        title: "Dashboard",
+        path: route('dashboard'),
       },
       {
         icon: "mdi-pharmacy",
-        title: "Pharmacies",
-        path: "pharmacies",
+        title: "Quiz",
+        path: route('quiz.index'),
       },
       {
         icon: "mdi-hospital-box",
         title: "Hopitaux",
-        path: "hopitaux",
-      },
-      {
-        icon: "mdi-account-plus",
-        title: "Ajouter un Admin",
-        path: "addAdmin",
-      },
-      {
-        icon: "mdi-face-profile",
-        title: "Profile",
-        path: "profile",
+        path: route('quiz.create'),
       },
     ],
+    status: 1,
   }),
   methods: {
     toggleTheme() {
