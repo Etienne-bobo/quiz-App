@@ -42,7 +42,7 @@ class QuizController extends Controller
              'description' => $request->get('description'),
              'minutes' => $request->get('minutes')
          ]);
-         return redirect()->back()->with('message', 'Quiz created...');
+         return Redirect::route('quiz.index')->with('message', 'Success Quiz created...');
     }
 
     /**
@@ -88,9 +88,8 @@ class QuizController extends Controller
         $quiz-> description = $request->get('description');
         $quiz-> minutes = $request->get('minutes');
         $quiz->save();
-        return Redirect::route('quiz.index')->with('message', 'Quiz updated ....');
+        return Redirect::route('quiz.index')->with('message', 'Success Quiz updated ....');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -100,7 +99,6 @@ class QuizController extends Controller
     public function destroy(Quiz $quiz)
     {
         $quiz->delete();
-
-        return Redirect::back()->with('message', 'Success Quiz deleted.');
+        return Redirect::route('quiz.index')->with('message', 'Success Quiz deleted ....');
     }
 }

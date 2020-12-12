@@ -1,16 +1,5 @@
 <template>
   <v-main>
-    <div class="text-center">
-      <v-snackbar v-model="snackbar" :multi-line="multiLine" top>
-        <p class="text-sm">{{ $page.flash.message }}</p>
-
-        <template v-slot:action="{ attrs }">
-          <v-btn color="red" text v-bind="attrs" @click="snackbar = false">
-            Close
-          </v-btn>
-        </template>
-      </v-snackbar>
-    </div>
     <div align="center">
       <v-container>
         <v-alert border="top" colored-border type="info" elevation="2">
@@ -39,6 +28,7 @@
             label="Duration of the quiz (in minutes)"
             required
             filled
+            type="number"
           ></v-text-field>
           <v-btn
             :disabled="!valid"
@@ -62,14 +52,8 @@ export default {
       description: "",
       minutes: "",
     },
-    multiLine: true,
-      snackbar: false,
-    nameRules: [
-      (v) => !!v || "Name is required",
-    ],
-    minutesRules: [
-      (v) => !!v || "Duration of the quiz is required",
-    ],
+    nameRules: [(v) => !!v || "Name is required"],
+    minutesRules: [(v) => !!v || "Duration of the quiz is required"],
     descriptionRules: [(v) => !!v || "Description is required"],
   }),
 

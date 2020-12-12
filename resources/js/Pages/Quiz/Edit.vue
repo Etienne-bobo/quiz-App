@@ -43,7 +43,6 @@
               </v-btn>
             </inertia-link>
                         <v-btn color="blue darken-1" text @click="update"> Update </v-btn>
-
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -69,8 +68,6 @@ export default {
         description: this.quiz.description,
         minutes: this.quiz.minutes,
       },
-      multiLine: true,
-      snackbar: false,
       nameRules: [(v) => !!v || "Name is required"],
       minutesRules: [(v) => !!v || "Duration of the quiz is required"],
       descriptionRules: [(v) => !!v || "Description is required"],
