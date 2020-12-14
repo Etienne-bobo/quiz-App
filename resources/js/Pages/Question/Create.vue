@@ -10,25 +10,34 @@
           <v-form ref="form" class="mt-6" v-model="valid" lazy-validation>
             <v-select
               :items="quizzes"
-              v-model="quiz"
+              v-model="form.quiz"
               name="quiz"
+              :rules="quizRules"
+              item-value="id"
               item-text="name"
               label="Select a quiz"
             />
             <v-text-field
               v-model="form.question"
-              :rules="nameRules"
+              :rules="questionRules"
               label="Enter Question"
               required
               filled
             ></v-text-field>
-
             <div v-for="n in 4" :key="n">
-              <v-text-field v-model="options" solo label="Enter option" clearable>
+              <v-text-field
+                v-model="form.options[n]"
+                solo
+                label="Enter option"
+                clearable
+                :rules="optionRules"
+              >
                 <template v-slot:append-outer>
-                  <v-radio-group v-model="radioGroup">
-                    <v-radio v-model="correct_answer" label="Correct option" :value="n"></v-radio>
-                  </v-radio-group>
+                  <v-switch
+                    v-model="form.correct_answer"
+                    inset
+                    :value="n"
+                  ></v-switch>
                 </template>
               </v-text-field>
             </div>
@@ -52,18 +61,15 @@ export default {
   data() {
     return {
       valid: true,
-      radioGroup: 1,
-      quiz: '',
-      options: [],
-      correct_answer:'',
       form: {
         question: "",
-        description: "",
-        minutes: "",
+        quiz: "",
+        options: [],
+        correct_answer: 1,
       },
-      nameRules: [(v) => !!v || "Name is required"],
-      minutesRules: [(v) => !!v || "Duration of the quiz is required"],
-      descriptionRules: [(v) => !!v || "Description is required"],
+      quizRules: [(v) => !!v || "Quiz is required"],
+      questionRules: [(v) => !!v || "Question is required"],
+      optionRules: [(v) => !!v || "Option is required"],
     };
   },
   components: {
@@ -71,9 +77,6 @@ export default {
   },
   props: ["quizzes"],
   methods: {
-    validate() {
-      this.$refs.form.validate();
-    },
     reset() {
       this.$refs.form.reset();
     },
@@ -82,7 +85,7 @@ export default {
     },
     store: function (data) {
       if (this.$refs.form.validate()) {
-        this.$inertia.post("/quiz", data);
+        this.$inertia.post("/question", data);
         this.snackbar = true;
       }
     },

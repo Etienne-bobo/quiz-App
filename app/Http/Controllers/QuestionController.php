@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Question;
 use App\Models\Quiz;
+use App\Models\Answer;
 
 class QuestionController extends Controller
 {
@@ -40,7 +41,15 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$data = $request->all();
+        $data =[        
+        'quiz' => $request->get('quiz'),
+        'question' => $request->get('question'),
+        'options' => $request->get('options'),
+        'correct_answer' => $request->get('correct_answer')];
+        $question = (new Question)->storeQuestion($data);
+        $answer = (new Answer)->storeAnswer($data, $question);
+        return redirect()->back()->with('message', 'Success Question created...');
     }
 
     /**

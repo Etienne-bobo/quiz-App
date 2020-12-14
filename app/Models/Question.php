@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Answer;
 use App\Models\Quiz;
+use App\Models\Queston;
 
 class Question extends Model
 {
@@ -20,5 +21,10 @@ class Question extends Model
     }
     public function quiz(){
         return $this->belongsTo(Quiz::class);
+    }
+
+    public function storeQuestion($data){
+        $data ['quiz_id'] = $data ['quiz'];
+        return Question::create($data);
     }
 }
