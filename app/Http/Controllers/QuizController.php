@@ -70,6 +70,7 @@ class QuizController extends Controller
                 'name' => $quiz->name,
                 'description' => $quiz->description,
                 'minutes' => $quiz->minutes,
+                'questions' => $quiz->questions()->get()->map->only('question'),
             ],
         ]);
     }
@@ -88,7 +89,7 @@ class QuizController extends Controller
         $quiz-> description = $request->get('description');
         $quiz-> minutes = $request->get('minutes');
         $quiz->save();
-        return Redirect::route('quiz.index')->with('message', 'Success Quiz updated ....');
+        return redirect()->back()->with('message', 'Success Quiz updated ....');
     }
     /**
      * Remove the specified resource from storage.

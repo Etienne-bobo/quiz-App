@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\Answer;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -18,8 +19,10 @@ class QuestionController extends Controller
      */
     public function index()
     {
-       // $questions = Question::latest()->get();
-        //return Inertia::render('Question/Index', ['questions' => $questions]);
+        $questions = (new Question)->getQuestions()->get();
+        return Inertia::render('Question/Index', [
+            'questions' => $questions              
+        ]);
     }
 
     /**

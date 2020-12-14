@@ -14,7 +14,7 @@ class Quiz extends Model
         'description' ,	
         'minutes'
     ];
-
+    
     public function questions(){
         return $this->hasMany(Question::class);
     }

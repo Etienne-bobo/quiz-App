@@ -15,7 +15,7 @@ class Question extends Model
         'question', 	
         'quiz_id'
     ];
-
+    private $order = 'DESC';
     public function answers(){
         return $this->hasMany(Answer::class);
     }
@@ -26,5 +26,9 @@ class Question extends Model
     public function storeQuestion($data){
         $data ['quiz_id'] = $data ['quiz'];
         return Question::create($data);
+    }
+
+    public function getQuestions(){
+        return Question::orderBy('created_at', $this->order)->with('quiz');
     }
 }

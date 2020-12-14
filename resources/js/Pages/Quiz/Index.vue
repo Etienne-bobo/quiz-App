@@ -49,12 +49,9 @@
               <v-card-actions>
                 <inertia-link :href="route('quiz.edit', quiz.id)">
                   <v-btn @click="edit(quiz)" text color="teal white--text">
-                    Edit
+                    View
                   </v-btn>
                 </inertia-link>
-                <v-btn @click="destroy(quiz)" color="red white--text">
-                  Delete
-                </v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
