@@ -68,7 +68,8 @@
                           <v-switch
                             v-model="answer.is_correct"
                             inset
-                            :value="answer.is_correct"
+                            value
+                            :input-value="id+1"
                           ></v-switch>
                         </template>
                       </v-text-field>
@@ -94,7 +95,7 @@
               <v-card-text>
                 <p>
                   This action will remove definitively
-                  <b>{{ question.name }}</b> quiz
+                  <b>{{ question.question }}</b> question
                 </p>
               </v-card-text>
               <v-card-actions>
@@ -106,7 +107,7 @@
                 >
                   Close
                 </v-btn>
-                <v-btn color="red" class="white--text" @click="destroy(quiz)">
+                <v-btn color="red" class="white--text" @click="destroy(question)">
                   Delete
                 </v-btn>
               </v-card-actions>
@@ -178,7 +179,7 @@ export default {
       form: {
         question: this.question.question,
         options: this.question.answers,
-        correct_answer: false,
+        correct_answer: 1,
       },
       questionRules: [(v) => !!v || "Question is required"],
       optionRules: [(v) => !!v || "Option is required"],

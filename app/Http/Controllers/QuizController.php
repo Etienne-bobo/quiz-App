@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Question;
 use App\Models\Quiz;
+use App\Models\Answer;
 
 class QuizController extends Controller
 {
@@ -97,8 +99,11 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Quiz $quiz)
+    public function destroy($id)
     {
+        (new Answer)->deleteAnswer($id);
+        (new Question)->deleteQuestion($id);
+        $quiz = Quiz::find($id);
         $quiz->delete();
         return Redirect::route('quiz.index')->with('message', 'Success Quiz deleted ....');
     }

@@ -35,18 +35,6 @@ class Answer extends Model
             
         }
     }
-
-    public function updateAnswer($request, $id){
-        $options = $request->get('options') ;
-        $answer = Answer::find($id);
-        foreach( $options as $key => $option){
-            if($key>=1){
-                $answer-> answer = $option;
-            }           
-        };
-        $answer->save();
-    }
-
     public function deleteAnswer($questionId){
         Answer::where('question_id', $questionId)->delete();
     }

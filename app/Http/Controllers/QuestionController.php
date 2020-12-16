@@ -116,6 +116,9 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        (new Answer)->deleteAnswer($id);
+        $question = Question::find($id);
+        $question->delete();
+        return Redirect::route('quiz.edit', $question->quiz_id)->with('message', 'Success Question and Choices deleted ....');
     }
 }

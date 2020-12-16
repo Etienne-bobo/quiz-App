@@ -31,4 +31,8 @@ class Question extends Model
     public function getQuestions(){
         return Question::orderBy('created_at', $this->order)->with('quiz');
     }
+
+    public function deleteQuestion($quizId){
+        Question::where('quiz_id', $quizId)->delete();
+    }
 }

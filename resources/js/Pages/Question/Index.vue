@@ -24,7 +24,7 @@
         </div>
         <v-alert
           border="top"
-          class="mx-2"
+          class="mx-2 py-6"
           colored-border
           type="info"
           elevation="2"
@@ -45,12 +45,9 @@
                   <v-card-actions>
                     <inertia-link :href="route('question.edit', question.id)">
                       <v-btn @click="edit(quiz)" text color="teal white--text">
-                        Edit
+                      View
                       </v-btn>
                     </inertia-link>
-                    <v-btn @click="destroy(quiz)" color="red white--text">
-                      Delete
-                    </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-col>
