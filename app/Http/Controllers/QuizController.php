@@ -70,7 +70,7 @@ class QuizController extends Controller
                 'name' => $quiz->name,
                 'description' => $quiz->description,
                 'minutes' => $quiz->minutes,
-                'questions' => $quiz->questions()->get()->map->only('question'),
+                'questions' => $quiz->questions()->get()->map->only('id', 'question'),
             ],
         ]);
     }

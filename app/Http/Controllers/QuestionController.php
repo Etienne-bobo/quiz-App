@@ -72,9 +72,15 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Question $question)
     {
-        //
+        return Inertia::render('Question/Edit', [
+            'question' => [
+                'id' => $question->id,
+                'question' => $question->question,
+                'answers' => $question->answers()->get()->map->only('id', 'answer', 'is_correct'),
+            ],
+        ]);
     }
 
     /**
@@ -86,7 +92,20 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $question = Question::find($id);
+        $question-> question = $request->get('question');      
+        if($question->save()){
+            $options = $request->get('options') ;
+
+            foreach( $options as $key => $option){
+                $answer = Answer::find($option['id']);
+                    $answer-> answer = $option['answer'];
+                    $answer-> is_correct = $option['is_correct'];
+                $answer->save(); 
+            };          
+            return redirect()->back()->with('message', 'Success Question updated ....');
+        }
+
     }
 
     /**

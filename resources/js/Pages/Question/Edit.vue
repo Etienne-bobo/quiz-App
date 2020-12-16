@@ -25,7 +25,7 @@
         <v-flex xs12 sm12 md12 lg9 class="mt-6">
           <div class="mt-6 mr-lg-12">
             <p class="display-1 font-weight-bold">
-              {{ quiz.name
+              {{ question.question
               }}<span
                 ><v-icon
                   class="ml-6"
@@ -35,10 +35,6 @@
                 ></span
               >
             </p>
-            <p class="text--mini">
-              <span>Description:</span> {{ quiz.description }}
-            </p>
-            <p class="text--mini"><span>Duration:</span> {{ quiz.minutes }}</p>
           </div>
         </v-flex>
         <v-row justify="center">
@@ -54,31 +50,30 @@
                     lazy-validation
                   >
                     <v-text-field
-                      v-model="form.name"
-                      :rules="nameRules"
-                      label="Name"
+                      v-model="form.question"
+                      :rules="questionRules"
+                      label="Question"
                       required
                       filled
                     ></v-text-field>
-                    <v-textarea
-                      v-model="form.description"
-                      :rules="descriptionRules"
-                      auto-grow
-                      filled
-                      color="deep-purple"
-                      label="Description"
-                      rows="1"
-                    ></v-textarea>
-                    <v-text-field
-                      v-model="form.minutes"
-                      :rules="minutesRules"
-                      label="Duration of the quiz (in minutes)"
-                      required
-                      filled
-                    ></v-text-field>
+                      <v-text-field
+                      v-for="(answer, id) in form.options" :key="id"
+                        v-model="answer.answer"
+                        solo
+                        label="Enter option"
+                        clearable
+                        :rules="optionRules"
+                      >
+                        <template v-slot:append-outer>
+                          <v-switch
+                            v-model="answer.is_correct"
+                            inset
+                            :value="answer.is_correct"
+                          ></v-switch>
+                        </template>
+                      </v-text-field>
                   </v-form>
                 </v-container>
-                <small>*indicates required field</small>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -98,8 +93,8 @@
               <v-card-title> Delete this Quiz </v-card-title>
               <v-card-text>
                 <p>
-                  This qction will remove definitively
-                  <b>{{ quiz.name }}</b> quiz
+                  This action will remove definitively
+                  <b>{{ question.name }}</b> quiz
                 </p>
               </v-card-text>
               <v-card-actions>
@@ -125,42 +120,39 @@
           type="info"
           elevation="2"
         >
-          List of All Questions
+          List of All Choices
         </v-alert>
-        <v-row no-gutters v-if="quiz.questions.length != 0">
+        <v-row no-gutters>
           <v-col
-            v-for="(question, id) in quiz.questions"
+            v-for="(answer, id) in question.answers"
             :key="id"
             cols="12"
             sm="4"
           >
             <v-card class="mx-auto mb-6" max-width="344">
               <v-card-text>
-                <p class="display-1 text--primary">
-                  {{ question.question }}
+                <p class="text-xl text--primary">
+                  {{ id + 1 }} - {{ answer.answer }}
                 </p>
               </v-card-text>
               <v-card-actions>
-                <inertia-link :href="route('question.edit', question.id)">
-                  <v-btn text color="teal white--text">
-                    View
-                  </v-btn>
-                </inertia-link>
+                <v-btn
+                  v-if="answer.is_correct == 1"
+                  color="success"
+                  class="ml-2"
+                >
+                  Correct
+                </v-btn>
+                <v-btn
+                  v-if="answer.is_correct == 0"
+                  color="red lighten-1"
+                  class="ml-2 white--text"
+                >
+                  Not correct
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
-        </v-row>
-        <v-row class="text-center mx-auto" v-else>
-          <div align="center" class="mx-2">
-            <v-alert border="right" colored-border type="error" elevation="2">
-              Question list is empty.<br />
-              Click add button to add one .
-            </v-alert>
-            <v-skeleton-loader
-              v-bind="attrs"
-              type="date-picker"
-            ></v-skeleton-loader>
-          </div>
         </v-row>
       </v-container>
     </v-main>
@@ -173,7 +165,7 @@ export default {
   components: {
     AppLayout,
   },
-  props: ["quiz"],
+  props: ["question"],
   remember: "form",
   data() {
     return {
@@ -184,13 +176,12 @@ export default {
       multiLine: true,
       snackbar: true,
       form: {
-        name: this.quiz.name,
-        description: this.quiz.description,
-        minutes: this.quiz.minutes,
+        question: this.question.question,
+        options: this.question.answers,
+        correct_answer: false,
       },
-      nameRules: [(v) => !!v || "Name is required"],
-      minutesRules: [(v) => !!v || "Duration of the quiz is required"],
-      descriptionRules: [(v) => !!v || "Description is required"],
+      questionRules: [(v) => !!v || "Question is required"],
+      optionRules: [(v) => !!v || "Option is required"],
     };
   },
   methods: {
@@ -202,16 +193,20 @@ export default {
     },
     update: function () {
       if (this.$refs.form.validate()) {
-        this.$inertia.put(this.route("quiz.update", this.quiz.id), this.form, {
-          onStart: () => (this.sending = true),
-          onFinish: () => (this.sending = false),
-        });
+        this.$inertia.put(
+          this.route("question.update", this.question.id),
+          this.form,
+          {
+            onStart: () => (this.sending = true),
+            onFinish: () => (this.sending = false),
+          }
+        );
       }
       this.dialog = false;
     },
-    destroy(quiz) {
-      quiz._method = "DELETE";
-      this.$inertia.post("/quiz/" + quiz.id, quiz);
+    destroy(question) {
+      question._method = "DELETE";
+      this.$inertia.post("/question/" + question.id, question);
       this.confirmationDialog = false;
     },
   },
