@@ -16,7 +16,7 @@ class Quiz extends Model
         'description' ,	
         'minutes'
     ];
-    
+    private $order = 'DESC';
     public function questions(){
         return $this->hasMany(Question::class);
     }
@@ -31,4 +31,7 @@ class Quiz extends Model
         return $quiz->users()->syncWithoutDetaching($userId);
     }
     
+    public function getAssignQuiz(){
+        return Quiz::orderBy('created_at', $this->order)->with('users');
+    }
 }

@@ -16,7 +16,10 @@ class ExamController extends Controller
      */
     public function index()
     {
-        //
+        $quizzes = (new Quiz)->getAssignQuiz()->get();
+        return Inertia::render('Exam/Index', [
+            'quizzes' => $quizzes              
+        ]);
     }
 
     /**
@@ -40,7 +43,7 @@ class ExamController extends Controller
     public function store(Request $request)
     {
         $quiz = (new Quiz)->assignExam($request->all());
-        return redirect()->back()->with('message', 'Success Quiz assigned...');
+        return Redirect::route('exam.index')->with('message', 'Success Quiz assigned...');
     }
 
     /**
