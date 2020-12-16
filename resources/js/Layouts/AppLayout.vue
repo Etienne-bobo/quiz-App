@@ -165,8 +165,8 @@ export default {
       },
       {
         icon: "mdi-hospital-box",
-        title: "Hopitaux",
-        path: route('quiz.create'),
+        title: "Questions",
+        path: route('question.index'),
       },
     ],
     status: 1,

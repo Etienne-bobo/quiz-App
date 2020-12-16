@@ -40,7 +40,7 @@
         <v-row justify="center">
           <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
-              <v-card-title> </v-card-title>
+              <v-card-title>Question </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-form

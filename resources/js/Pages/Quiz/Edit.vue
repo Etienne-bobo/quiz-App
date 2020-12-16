@@ -14,14 +14,12 @@
         </v-snackbar>
       </div>
       <v-container>
-        <v-btn
-          fixed
-          right
-          @click="confirmationDialog = true"
-          color="red white--text"
-        >
-          Delete
-        </v-btn>
+        <div align="right">
+          <v-btn @click="confirmationDialog = true" color="red white--text">
+            Delete
+          </v-btn>
+        </div>
+
         <v-flex xs12 sm12 md12 lg9 class="mt-6">
           <div class="mt-6 mr-lg-12">
             <p class="display-1 font-weight-bold">
@@ -44,7 +42,7 @@
         <v-row justify="center">
           <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
-              <v-card-title> </v-card-title>
+              <v-card-title>Quiz </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-form
@@ -118,6 +116,15 @@
             </v-card>
           </v-dialog>
         </v-row>
+        <div align="right">
+          <inertia-link :href="route('question.create')">
+            <v-btn right color="primary" class="py-6">
+              <v-icon>mdi-plus</v-icon>
+              Add new Question
+            </v-btn>
+          </inertia-link>
+        </div>
+
         <v-alert
           border="top"
           class="mt-6 py-6"
@@ -125,7 +132,7 @@
           type="info"
           elevation="2"
         >
-          List of All Questions
+          List of Questions
         </v-alert>
         <v-row no-gutters v-if="quiz.questions.length != 0">
           <v-col
@@ -142,26 +149,24 @@
               </v-card-text>
               <v-card-actions>
                 <inertia-link :href="route('question.edit', question.id)">
-                  <v-btn text color="teal white--text">
-                    View
-                  </v-btn>
+                  <v-btn text color="teal white--text"> View </v-btn>
                 </inertia-link>
               </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
-        <v-row class="text-center mx-auto" v-else>
+        <div class="text-center mx-auto" v-else>
+          <v-alert border="right" colored-border type="error" elevation="2">
+            Question list is empty.<br />
+            Click add button to add one .
+          </v-alert>
           <div align="center" class="mx-2">
-            <v-alert border="right" colored-border type="error" elevation="2">
-              Question list is empty.<br />
-              Click add button to add one .
-            </v-alert>
             <v-skeleton-loader
               v-bind="attrs"
               type="date-picker"
             ></v-skeleton-loader>
           </div>
-        </v-row>
+        </div>
       </v-container>
     </v-main>
   </v-app>

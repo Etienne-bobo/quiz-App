@@ -24,7 +24,7 @@
         </div>
         <v-alert
           border="top"
-          class="mx-2 py-6"
+          class="mx-2 py-6 text-center font-bold"
           colored-border
           type="info"
           elevation="2"
@@ -35,7 +35,7 @@
               <v-col v-for="(question, id) in questions" :key="id" cols="12" sm="4">
                 <v-card class="mx-auto mb-6" max-width="344">
                   <v-card-text>
-                    <p class="display-1 text--primary">
+                    <p class="text-2xl text--primary">
                       {{ question.question }}
                     </p>
                     <p v-if="question.quiz" class="text--primary">
