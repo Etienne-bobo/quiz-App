@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ExamController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,9 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');
 })->name('dashboard');
-
-Route::resource('quiz', QuizController::class);
-Route::resource('question', QuestionController::class);
-Route::resource('user', UserController::class);
+Route::group(['middleware' => 'isAdmin'], function(){
+    Route::resource('quiz', QuizController::class);
+    Route::resource('question', QuestionController::class);
+    Route::resource('user', UserController::class);
+    Route::get('exam/assign', [ExamController::class, 'create'])->name('assign.exam');
+});
