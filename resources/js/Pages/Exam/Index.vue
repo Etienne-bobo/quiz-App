@@ -31,9 +31,10 @@
         >
           User Quiz
         </v-alert>
-            <v-row no-gutters v-if="quizzes.length != 0">
-              <v-col v-for="(quiz, id) in quizzes" :key="id" cols="12" sm="4">
-                <v-card v-for="(user, id) in quiz.users" :key="id" class="mx-auto mb-6" max-width="344">
+        <div v-if="quizzes.length != 0">
+            <v-row no-gutters v-for="(quiz, id) in quizzes" :key="id">
+              <v-col v-for="(user, id) in quiz.users" :key="id" cols="12" sm="4">
+                <v-card  class="mx-auto mb-6" max-width="344">
                   <v-card-text>
                     <p class="text-xl text--primary">
                       Quiz: {{ quiz.name }}
@@ -51,7 +52,8 @@
                 </v-card>
               </v-col>
             </v-row>
-        <v-row class="text-center mx-auto" v-else>
+            </div>
+        <div class="text-center mx-auto" v-else>
           <div align="center" class="mx-2">
             <v-alert border="right" colored-border type="error" elevation="2">
               User list is empty.<br />
@@ -62,7 +64,7 @@
               type="date-picker"
             ></v-skeleton-loader>
           </div>
-        </v-row>
+        </div>
       </v-container>
     </v-main>
   </v-app>
