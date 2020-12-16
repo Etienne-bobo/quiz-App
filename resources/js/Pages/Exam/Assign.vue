@@ -10,7 +10,7 @@
           <v-form ref="form" class="mt-6" v-model="valid" lazy-validation>
             <v-select
               :items="quizzes"
-              v-model="form.quiz"
+              v-model="form.quiz_id"
               name="quiz"
               :rules="quizRules"
               item-value="id"
@@ -47,10 +47,8 @@ export default {
     return {
       valid: true,
       form: {
-        question: "",
-        quiz: "",
-        options: [],
-        correct_answer: 1,
+        user_id: "",
+        quiz_id: "",
       },
       quizRules: [(v) => !!v || "Quiz is required"],
       questionRules: [(v) => !!v || "Question is required"],
@@ -70,7 +68,7 @@ export default {
     },
     store: function (data) {
       if (this.$refs.form.validate()) {
-        this.$inertia.post("/exam", data);
+        this.$inertia.post("/exam/assign", data);
         this.snackbar = true;
       }
     },
