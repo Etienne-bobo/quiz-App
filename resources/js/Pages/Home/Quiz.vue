@@ -131,39 +131,38 @@
       </v-navigation-drawer>
     </div>
     <v-main>
-      <v-row v-if="isExamAssigned" class="mt-6" no-gutters>
-        <v-col v-for="(quiz, id) in quizzes" :key="id" cols="12" sm="4">
+      <v-row class="mt-6" no-gutters>
+        <v-col cols="12" sm="4">
           <v-card class="mx-auto mb-6" max-width="344">
-            <v-card-text>
+            <v-card-title>Online Examination</v-card-title>
+            <span>{{questionIndex}}/{{quizQuestions.length}} </span>
+            <v-card-text v-for="(question, id) in quizQuestions" :key="id">
+                <div v-if="id === questionIndex ">
               <p class="text-xl text--primary">
-                {{ quiz.name }}
+                {{ question.question }}
               </p>
-              <p class="text-xl text--primary">
-                {{ quiz.description }}
-              </p>
-              <p class="text-xl text--primary">
-                {{ quiz.minutes }}
-              </p>
-              <p class="text-xl text--primary">
-                {{ questions.length }}
-              </p>
+              <li v-for="(choice, id) in question.answers" :key="id">
+                  <ol>
+                  <label>
+                      <input type="radio">
+                      {{choice.answer}}
+                  </label>
+                  </ol>
+              </li>
+              </div>
             </v-card-text>
-            <v-card-actions>
-              <inertia-link
-                v-if="!wasQuizCompleted.includes(quiz.id)"
-                :href="route('getQuizQuestions', quiz.id)"
-              >
-                <v-btn color="success" class="ml-2"> Start Quiz </v-btn>
-              </inertia-link>
+            <v-card-actions v-if="questionIndex != quizQuestions.length">
+              <v-btn text color="success" class="ml-2" @click="prev"> previous </v-btn>
 
-              <inertia-link v-else>
-                <v-btn text color="red lighten-2" class="ml-2 white--text">
-                  Completed
-                </v-btn>
-              </inertia-link>
+              <v-btn text color="red lighten-2" class="ml-2 white--text" @click="next">
+                Next
+              </v-btn>
+            </v-card-actions>
+            <v-card-actions v-if="questionIndex === quizQuestions.length">
+              <p>you</p>
             </v-card-actions>
           </v-card>
-        </v-col>
+        </v-col>    
       </v-row>
       <div></div>
       <div>
@@ -176,14 +175,16 @@
 <script>
 import JetDropdown from "../../Jetstream/Dropdown";
 import JetDropdownLink from "../../Jetstream/DropdownLink";
+import Input from '../../Jetstream/Input.vue';
 
 export default {
   name: "Dashboard",
   components: {
     JetDropdown,
     JetDropdownLink,
+    Input,
   },
-  props: ["quizzes", "wasQuizCompleted", "isExamAssigned", "questions"],
+  props: ["quizQuestions", "quiz", "time", "authUserHasPlayedQuiz"],
   computed: {
     mini() {
       return this.$vuetify.breakpoint.smAndDown || this.toggleMini;
@@ -195,6 +196,7 @@ export default {
   data: () => ({
     sidebarMenu: true,
     toggleMini: false,
+    questionIndex: 0,
     items: [
       {
         icon: "mdi-google-analytics",
@@ -213,6 +215,12 @@ export default {
         window.location = "/";
       });
     },
+    next(){
+        this.questionIndex++;
+    },
+    prev(){
+        this.questionIndex--;
+    }
   },
 };
 </script>

@@ -52,7 +52,7 @@ class QuestionController extends Controller
         'correct_answer' => $request->get('correct_answer')];
         $question = (new Question)->storeQuestion($data);
         $answer = (new Answer)->storeAnswer($data, $question);
-        return redirect()->back()->with('message', 'Success Question created...');
+        return Redirect::route('quiz.edit', $question->quiz_id )->with('message', 'Success Question created...');
     }
 
     /**

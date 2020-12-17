@@ -22,6 +22,8 @@ use App\Http\Controllers\homeController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::middleware(['auth:sanctum', 'verified'])->get('quiz/{quizId}',[ExamController::class, 'getQuizQuestions'])->name('getQuizQuestions');
+
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return Inertia\Inertia::render('Dashboard');
 // })->name('dashboard');

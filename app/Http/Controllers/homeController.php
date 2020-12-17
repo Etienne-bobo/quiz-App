@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
-
+use App\Models\Quiz;
+use App\Models\Question;
+use App\Models\Result;
+use DB;
 class homeController extends Controller
 {
     /**
@@ -12,9 +15,24 @@ class homeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Quiz $quiz)
     {
-        return Inertia::render('Home/Index');
+        $authUser = auth()->user()->id;
+        $assignedQuizId = [];
+        $user = DB::table('quiz_user')->where('user_id', $authUser)->get();
+        foreach($user as $u){
+            array_push($assignedQuizId, $u->quiz_id);
+        }
+        $quizzes = Quiz::whereIn('id', $assignedQuizId)->get(); //compare array of id
+        $isExamAssigned = DB::table('quiz_user')->where('user_id', $authUser)->exists();
+        $wasQuizCompleted = Result::where('user_id', $authUser)->whereIn('quiz_id', (new Quiz)->hasQuizAttempted())->pluck('quiz_id')->toArray();   
+        $questions = Quiz::with('questions')->get();
+        return Inertia::render('Home/Index',[
+            'quizzes' => $quizzes,
+            'wasQuizCompleted' => $wasQuizCompleted,
+            'isExamAssigned' => $isExamAssigned,
+            'questions' =>$questions
+        ]);
     }
 
     /**

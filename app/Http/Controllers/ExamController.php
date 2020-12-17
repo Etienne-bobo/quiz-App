@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Models\Quiz;
 use App\Models\User;
+use App\Models\Question;
 use App\Models\Result;
 
 class ExamController extends Controller
@@ -99,5 +100,20 @@ class ExamController extends Controller
             $quiz->users()->detach($userId);
             return redirect()->back()->with('message', 'This quiz is now not assign to user ....');
         }
+    }
+
+    public function getQuizQuestions(Request $request, $quizId)
+    {
+        $authUser = auth()->user()->id;
+        $quiz = Quiz::find($quizId);
+        $time = Quiz::where('id', $quizId)->value('minutes');
+        $quizQuestions = Question::where('quiz_id', $quizId)->with('answers')->get();
+        $authUserHasPlayedQuiz = Result::where(['user_id' => $authUser, 'quiz_id' => $quizId])->get();
+        return Inertia::render('Home/Quiz', [
+            'quiz' => $quiz, 
+            'quizQuestions' => $quizQuestions,
+            'authUserHasPlayedQuiz' => $authUserHasPlayedQuiz,
+            'time' => $time
+            ]);
     }
 }
