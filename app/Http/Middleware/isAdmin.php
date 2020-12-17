@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use Illuminate\Support\Facades\Redirect;
 use Closure;
 use Illuminate\Http\Request;
 use Auth;
@@ -19,6 +19,8 @@ class isAdmin
         if(Auth::user() && Auth::user()->is_admin == 1){
             return $next($request);
         }
-        return redirect('/login');
+        else{
+            return Redirect::route('home');
+        }
     }
 }

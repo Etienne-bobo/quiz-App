@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
-use App\Models\Quiz;
-use App\Models\User;
-use App\Models\Result;
 
-class ExamController extends Controller
+class homeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +14,7 @@ class ExamController extends Controller
      */
     public function index()
     {
-        $quizzes = (new Quiz)->getAssignQuiz()->get();
-        return Inertia::render('Exam/Index', [
-            'quizzes' => $quizzes              
-        ]);
+        return Inertia::render('Home/Index');
     }
 
     /**
@@ -30,9 +24,7 @@ class ExamController extends Controller
      */
     public function create()
     {
-        $quizzes = Quiz::latest()->get();
-        $users = User::where('is_admin', '0')->latest()->get();
-        return Inertia::render('Exam/Assign', ['quizzes' => $quizzes, 'users' => $users]);
+        //
     }
 
     /**
@@ -43,8 +35,7 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
-        $quiz = (new Quiz)->assignExam($request->all());
-        return Redirect::route('exam.index')->with('message', 'Success Quiz assigned...');
+        //
     }
 
     /**
@@ -87,17 +78,8 @@ class ExamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $quizId = $request->get('quiz_id') ;
-        $userId = $request->get('user_id') ;
-        $quiz = Quiz::find($quizId);
-        $result = Result::where('quiz_id', $quizId)->where('user_id', $userId)->exists();
-        if($result){
-            return redirect()->back()->with('message', 'This quiz is played by user so it cannot remove ....');
-        }else{
-            $quiz->users()->detach($userId);
-            return redirect()->back()->with('message', 'This quiz is now not assign to user ....');
-        }
+        //
     }
 }

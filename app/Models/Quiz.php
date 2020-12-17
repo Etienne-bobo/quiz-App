@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Question;
 use App\Models\User;
 use App\Models\Quiz;
+use App\Models\Result;
 
 class Quiz extends Model
 {
@@ -33,5 +34,15 @@ class Quiz extends Model
     
     public function getAssignQuiz(){
         return Quiz::orderBy('created_at', $this->order)->with('users');
+    }
+
+    public function hasQuizAttempted(){
+        $attemptQuiz = [];
+        $authUser = auth()->user()->id;
+        $user = Result::where('user_id', $authUser)->get();
+        foreach($user as $u){
+            array_push($attemptQuiz, $u->quiz_id);
+        }
+        return $attemptQuiz;
     }
 }

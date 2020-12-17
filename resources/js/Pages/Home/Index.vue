@@ -1,4 +1,5 @@
 <template>
+<v-app>
     <div>
       <v-app-bar app color="success" dark elevation="0">
         <v-app-bar-nav-icon
@@ -129,11 +130,12 @@
         >
       </v-navigation-drawer>
     </div>
+</v-app>
 </template>
 
 <script>
-import JetDropdown from "../Jetstream/Dropdown";
-import JetDropdownLink from "@/Jetstream/DropdownLink";
+import JetDropdown from "../../Jetstream/Dropdown";
+import JetDropdownLink from "../../Jetstream/DropdownLink";
 
 export default {
   name: "Dashboard",
@@ -155,29 +157,10 @@ export default {
     items: [
       {
         icon: "mdi-google-analytics",
-        title: "Dashboard",
+        title: "Quiz",
         path: route('home'),
       },
-      {
-        icon: "mdi-pharmacy",
-        title: "Quiz",
-        path: route('quiz.index'),
-      },
-      {
-        icon: "mdi-hospital-box",
-        title: "Questions",
-        path: route('question.index'),
-      },
-      {
-        icon: "mdi-hospital-box",
-        title: "Users",
-        path: route('user.index'),
-      },
-      {
-        icon: "mdi-hospital-box",
-        title: "Assign Quiz",
-        path: route('exam.index'),
-      },
+     
     ],
     status: 1,
   }),
