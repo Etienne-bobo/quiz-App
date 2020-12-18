@@ -23,6 +23,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::middleware(['auth:sanctum', 'verified'])->get('quiz/{quizId}',[ExamController::class, 'getQuizQuestions'])->name('getQuizQuestions');
+Route::middleware(['auth:sanctum', 'verified'])->post('quiz/create',[ExamController::class, 'postQuiz'])->name('postQuiz');
+Route::middleware(['auth:sanctum', 'verified'])->get('/result/user/{userId}/quiz/{quizId}',[ExamController::class, 'viewResult'])->name('viewResult');
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return Inertia\Inertia::render('Dashboard');

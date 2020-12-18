@@ -9,15 +9,19 @@
           <span>{{ questionIndex }}/{{ quizQuestions.length }} </span>
         </div>
         <v-divider></v-divider>
-        <v-card-text class="px-8" v-for="(question, id) in quizQuestions" :key="id">
+        <v-card-text
+          class="px-8"
+          v-for="(question, id) in quizQuestions"
+          :key="id"
+        >
           <div v-if="id === questionIndex">
             <p class="text-2xl mb-8 text--primary">
-              {{ question.question }}
+              {{id+1}} : {{ question.question }}
             </p>
             <v-text-field
-              v-for="(choice, id) in question.answers"
-              :key="id"
-              :value="choice.answer"
+              v-for="choice in question.answers"
+              :key="choice"
+              v-model="choice.answer"
               label="Solo"
               height="50"
               solo
@@ -25,33 +29,35 @@
               rounded
             >
               <template v-slot:prepend-inner>
-                <v-radio-group v-model="radioGroup">
-                  <v-radio     
-                    :key="id"
-                    :value="id"
+                <v-radio-group v-model="userResponses[id]">
+                  <v-radio
+                    :value="choice.is_correct == true ? true : choice.answer"
+                    name="id"
+                    @click="choices(question.id, choice.id)"
                   ></v-radio>
                 </v-radio-group>
               </template>
             </v-text-field>
           </div>
         </v-card-text>
-      
+
         <div class="mb-16 px-6" v-if="questionIndex != quizQuestions.length">
-          <v-btn text color="secondary" class="ml-2 float-left" @click="prev">
+          <v-btn v-if="questionIndex > 0" text color="secondary" class="ml-2 float-left" @click="prev">
+            <v-icon>mdi-rewind</v-icon>
             previous
           </v-btn>
-
           <v-btn
             text
             color="primary"
             class="ml-2 white--text float-right"
-            @click="next"
+            @click="postUserChoices"
           >
             Next
+            <v-icon>mdi-fast-forward</v-icon>
           </v-btn>
         </div>
-         <v-card-actions v-if="questionIndex === quizQuestions.length">
-          <p>you</p>
+        <v-card-actions v-if="questionIndex === quizQuestions.length">
+          <p>{{ score() }}/{{ quizQuestions.length }}</p>
         </v-card-actions>
       </v-card>
     </v-main>
@@ -66,17 +72,34 @@ export default {
   props: ["quizQuestions", "quiz", "time", "authUserHasPlayedQuiz"],
   data() {
     return {
+      radioGroup: 0,
       questionIndex: 0,
+      userResponses: Array(this.quizQuestions.length).fill(false),
+      currentQuestion: 0,
+      currentAnswer: 0,
     };
   },
 
   methods: {
-    next() {
-      this.questionIndex++;
-    },
     prev() {
       this.questionIndex--;
     },
+    choices(question, answer) {
+      (this.currentAnswer = answer), (this.currentQuestion = question);
+    },
+    score() {
+      return this.userResponses.filter((val) => {
+        return val === true;
+      }).length;
+    },
+    postUserChoices(){
+      this.questionIndex++;
+      this.$inertia.post("/quiz/create", {
+        answerId: this.currentAnswer,
+        questionId: this.currentQuestion,
+        quizId: this.quiz.id
+      });
+    }
   },
 };
 </script>

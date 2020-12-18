@@ -31,7 +31,8 @@ class homeController extends Controller
             'quizzes' => $quizzes,
             'wasQuizCompleted' => $wasQuizCompleted,
             'isExamAssigned' => $isExamAssigned,
-            'questions' =>$questions
+            'questions' =>$questions,
+            'authUser' => $authUser
         ]);
     }
 

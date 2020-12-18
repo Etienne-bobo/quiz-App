@@ -8,6 +8,7 @@ use App\Models\Quiz;
 use App\Models\User;
 use App\Models\Question;
 use App\Models\Result;
+use DB;
 
 class ExamController extends Controller
 {
@@ -105,10 +106,20 @@ class ExamController extends Controller
     public function getQuizQuestions(Request $request, $quizId)
     {
         $authUser = auth()->user()->id;
+        //check if user has been assigned a particular quiz
+        $userId = DB::table('quiz_user')->where('user_id', $authUser)->pluck('quiz_id')->toArray();
+        if(!in_array($quizId, $userId)){
+            return Redirect::route('home')->with('message', 'You are not assigned this Quiz');
+        }
         $quiz = Quiz::find($quizId);
         $time = Quiz::where('id', $quizId)->value('minutes');
         $quizQuestions = Question::where('quiz_id', $quizId)->with('answers')->get();
         $authUserHasPlayedQuiz = Result::where(['user_id' => $authUser, 'quiz_id' => $quizId])->get();
+        //has user played particular quiz
+        $wasCompleted = Result::where('user_id', $authUser)->whereIn('quiz_id', (new Quiz)->hasQuizAttempted())->pluck('quiz_id')->toArray();
+        if(in_array($quizId, $wasCompleted)){
+            return Redirect::route('home')->with('message', 'You have already completed this quiz..');
+        }
         return Inertia::render('Home/Quiz', [
             'quiz' => $quiz, 
             'quizQuestions' => $quizQuestions,
@@ -116,4 +127,32 @@ class ExamController extends Controller
             'time' => $time
             ]);
     }
+    
+    public function postQuiz(Request $request)
+    {
+        $questionId = $request['questionId'];
+        $answerId = $request['answerId'];
+        $quizId = $request['quizId'];
+
+        $authuser = auth()->user();
+        $userQuestionAnswer = Result::updateOrCreate(
+            [
+                'user_id' => $authuser->id,
+                'quiz_id' => $quizId,
+                'question_id' => $questionId
+            ],
+            ['answer_id' => $answerId]
+        );
+        return redirect()->back();
+    }
+    public function viewResult($userId, $quizId){
+        $results = Result::where('user_id', $userId)->where('quiz_id', $quizId)->with('question')->with('answer')->get();
+        $answers = DB::table('answers')->get();
+        return Inertia::render('Home/Result', [
+            'results' => $results, 
+            'answers' => $answers,
+            ]);
+    }
+    
+
 }

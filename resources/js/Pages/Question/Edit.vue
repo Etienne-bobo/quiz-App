@@ -15,10 +15,9 @@
       </div>
       <v-container>
         <v-btn
-          fixed
-          right
           @click="confirmationDialog = true"
           color="red white--text"
+          class="float-right"
         >
           Delete
         </v-btn>
@@ -176,6 +175,11 @@ export default {
       sending: false,
       multiLine: true,
       snackbar: true,
+      attrs: {
+        class: "mb-6",
+        boilerplate: false,
+        elevation: 2,
+      },
       form: {
         question: this.question.question,
         options: this.question.answers,
