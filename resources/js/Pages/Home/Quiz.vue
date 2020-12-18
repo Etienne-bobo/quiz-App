@@ -6,7 +6,8 @@
         <div class="pt-4 pb-16">
           <v-card-title class="uppercase">{{ quiz.name }}</v-card-title>
           <span class="font-semibold text-lg">Online Examination</span>
-          <span>{{ questionIndex }}/{{ quizQuestions.length }} </span>
+          <span>{{ questionIndex }}/{{ quizQuestions.length }} </span> <br>
+          {{time}}
         </div>
         <v-divider></v-divider>
         <v-card-text
@@ -16,7 +17,7 @@
         >
           <div v-if="id === questionIndex">
             <p class="text-2xl mb-8 text--primary">
-              {{id+1}} : {{ question.question }}
+              {{ id + 1 }} : {{ question.question }}
             </p>
             <v-text-field
               v-for="choice in question.answers"
@@ -42,7 +43,13 @@
         </v-card-text>
 
         <div class="mb-16 px-6" v-if="questionIndex != quizQuestions.length">
-          <v-btn v-if="questionIndex > 0" text color="secondary" class="ml-2 float-left" @click="prev">
+          <v-btn
+            v-if="questionIndex > 0"
+            text
+            color="secondary"
+            class="ml-2 float-left"
+            @click="prev"
+          >
             <v-icon>mdi-rewind</v-icon>
             previous
           </v-btn>
@@ -66,10 +73,11 @@
 
 <script>
 import navBar from "./Navbar";
+import moment from 'moment'
 export default {
   name: "attemptQuiz",
   components: { navBar },
-  props: ["quizQuestions", "quiz", "time", "authUserHasPlayedQuiz"],
+  props: ["quizQuestions", "quiz", "times", "authUserHasPlayedQuiz"],
   data() {
     return {
       radioGroup: 0,
@@ -77,9 +85,24 @@ export default {
       userResponses: Array(this.quizQuestions.length).fill(false),
       currentQuestion: 0,
       currentAnswer: 0,
+      clock: moment(this.times*60*1000),
     };
   },
-
+  mounted(){
+    setInterval(()=>{
+      this.clock = moment(this.clock.subtract(1, 'seconds'))
+    }, 1000)
+  },
+  computed: {
+    time() {
+      var minsec = this.clock.format('mm:ss');
+      if(minsec == '00:00'){
+        alert('Timeout !!!')
+        window.location.reload()
+      }
+      return minsec
+    },
+  },
   methods: {
     prev() {
       this.questionIndex--;
@@ -92,14 +115,14 @@ export default {
         return val === true;
       }).length;
     },
-    postUserChoices(){
+    postUserChoices() {
       this.questionIndex++;
       this.$inertia.post("/quiz/create", {
         answerId: this.currentAnswer,
         questionId: this.currentQuestion,
-        quizId: this.quiz.id
+        quizId: this.quiz.id,
       });
-    }
+    },
   },
 };
 </script>

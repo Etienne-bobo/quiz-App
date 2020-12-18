@@ -112,7 +112,7 @@ class ExamController extends Controller
             return Redirect::route('home')->with('message', 'You are not assigned this Quiz');
         }
         $quiz = Quiz::find($quizId);
-        $time = Quiz::where('id', $quizId)->value('minutes');
+        $times = Quiz::where('id', $quizId)->value('minutes');
         $quizQuestions = Question::where('quiz_id', $quizId)->with('answers')->get();
         $authUserHasPlayedQuiz = Result::where(['user_id' => $authUser, 'quiz_id' => $quizId])->get();
         //has user played particular quiz
@@ -124,7 +124,7 @@ class ExamController extends Controller
             'quiz' => $quiz, 
             'quizQuestions' => $quizQuestions,
             'authUserHasPlayedQuiz' => $authUserHasPlayedQuiz,
-            'time' => $time
+            'times' => $times
             ]);
     }
     
