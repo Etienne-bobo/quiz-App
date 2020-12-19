@@ -3,12 +3,12 @@
     <navBar />
     <v-main>
       <v-card class="mx-auto mb-6 mt-6" max-width="600">
-        <div class="pt-4 pb-16">
-          <v-card-title class="uppercase">{{ quiz.name }}</v-card-title>
-          <div class="font-semibold text-lg text-center">
+        <v-card-title class="uppercase">{{ quiz.name }}</v-card-title>
+        <div class="pt-4 pb-16 px-6">
+          <div class="font-semibold text-lg text-center mb-4">
             Online Examination
           </div>
-          <div>
+          <div class="blue--text">
             Question attempted:{{ questionIndex }}/{{ quizQuestions.length }}
           </div>
           <br />
@@ -78,10 +78,10 @@
           <p>
             Your Score is : <b>{{ score() }}/{{ quizQuestions.length }}</b>
           </p>
+          <inertia-link :href="route('home')">
+            <v-btn class="my-6" color="primary"> Go home </v-btn>
+          </inertia-link>
         </div>
-        <inertia-link :href="route('home')">
-          <v-btn color="primary"> Go home </v-btn>
-        </inertia-link>
       </v-card>
     </v-main>
   </v-app>
