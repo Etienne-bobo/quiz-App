@@ -22,7 +22,7 @@
 
         <v-flex xs12 sm12 md12 lg9 class="mt-6">
           <div class="mt-6 mr-lg-12">
-            <p class="display-1 font-weight-bold">
+            <p class="text-2xl font-weight-bold">
               {{ quiz.name
               }}<span
                 ><v-icon
@@ -36,7 +36,7 @@
             <p class="text--mini">
               <span>Description:</span> {{ quiz.description }}
             </p>
-            <p class="text--mini"><span>Duration:</span> {{ quiz.minutes }}</p>
+            <p class="text--mini"><span>Duration:</span> {{ quiz.minutes }} min</p>
           </div>
         </v-flex>
         <v-row justify="center">

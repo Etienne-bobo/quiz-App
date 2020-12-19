@@ -35,7 +35,7 @@
           <v-col v-for="(quiz, id) in quizzes" :key="id" cols="12" sm="4">
             <v-card class="mx-auto mb-6" max-width="344">
               <v-card-text>
-                <p class="display-1 text--primary">
+                <p class="text-2xl text--primary">
                   {{ quiz.name }}
                 </p>
                 <div class="text--primary">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="text--primary mt-6">
                   <span>Duration:</span>
-                  {{ quiz.minutes }}
+                  {{ quiz.minutes }} min
                 </div>
               </v-card-text>
               <v-card-actions>
