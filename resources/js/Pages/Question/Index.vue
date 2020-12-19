@@ -15,10 +15,10 @@
     <v-main>
       <v-container class="mt-6">
         <div align="right" class="mb-8">
-          <inertia-link :href="route('quiz.create')">
+          <inertia-link :href="route('question.create')">
             <v-btn color="primary px-6 py-6">
               <v-icon>mdi-plus</v-icon>
-              Add new quiz
+              Add new question
             </v-btn>
           </inertia-link>
         </div>

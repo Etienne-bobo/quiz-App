@@ -21,7 +21,7 @@
           :key="id"
         >
           <div v-if="id === questionIndex">
-            <p class="text-2xl mb-8 text--primary">
+            <p class="text-xl mb-8 text--primary">
               {{ id + 1 }} : {{ question.question }}
             </p>
             <v-text-field

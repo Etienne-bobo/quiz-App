@@ -14,14 +14,6 @@
     </div>
     <v-main>
       <v-container class="mt-6">
-        <div align="right" class="mb-8">
-          <inertia-link :href="route('exam.create')">
-            <v-btn color="primary px-6 py-6">
-              <v-icon>mdi-plus</v-icon>
-              Assign new User
-            </v-btn>
-          </inertia-link>
-        </div>
         <v-alert
           border="top"
           class="mx-2 py-6 text-center font-bold"

@@ -13,7 +13,6 @@ Vue.mixin({ methods: { route } });
 Vue.use(InertiaApp);
 Vue.use(InertiaForm);
 Vue.use(PortalVue);
-var moment = require('moment');
 const app = document.getElementById('app');
 
 new Vue({
