@@ -2,12 +2,17 @@
   <v-app>
     <navBar />
     <v-main>
-      <v-card class="mx-auto mb-6 mt-6 text-center" max-width="600">
+      <v-card class="mx-auto mb-6 mt-6" max-width="600">
         <div class="pt-4 pb-16">
           <v-card-title class="uppercase">{{ quiz.name }}</v-card-title>
-          <span class="font-semibold text-lg">Online Examination</span>
-          <span>{{ questionIndex }}/{{ quizQuestions.length }} </span> <br>
-          {{time}}
+          <div class="font-semibold text-lg text-center">
+            Online Examination
+          </div>
+          <div>
+            Question attempted:{{ questionIndex }}/{{ quizQuestions.length }}
+          </div>
+          <br />
+          {{ time }}
         </div>
         <v-divider></v-divider>
         <v-card-text
@@ -63,9 +68,20 @@
             <v-icon>mdi-fast-forward</v-icon>
           </v-btn>
         </div>
-        <v-card-actions v-if="questionIndex === quizQuestions.length">
-          <p>{{ score() }}/{{ quizQuestions.length }}</p>
-        </v-card-actions>
+        <div
+          class="text-center py-6"
+          v-if="questionIndex === quizQuestions.length"
+        >
+          <v-alert dense text type="success">
+            You have successfully Completed this <strong>quiz</strong>
+          </v-alert>
+          <p>
+            Your Score is : <b>{{ score() }}/{{ quizQuestions.length }}</b>
+          </p>
+        </div>
+        <inertia-link :href="route('home')">
+          <v-btn color="primary"> Go home </v-btn>
+        </inertia-link>
       </v-card>
     </v-main>
   </v-app>
@@ -73,7 +89,7 @@
 
 <script>
 import navBar from "./Navbar";
-import moment from 'moment'
+import moment from "moment";
 export default {
   name: "attemptQuiz",
   components: { navBar },
@@ -85,22 +101,22 @@ export default {
       userResponses: Array(this.quizQuestions.length).fill(false),
       currentQuestion: 0,
       currentAnswer: 0,
-      clock: moment(this.times*60 * 1000),
+      clock: moment(this.times * 60 * 1000),
     };
   },
-  mounted(){
-    setInterval(()=>{
-      this.clock = moment(this.clock.subtract(1, 'seconds'))
-    }, 1000)
+  mounted() {
+    setInterval(() => {
+      this.clock = moment(this.clock.subtract(1, "seconds"));
+    }, 1000);
   },
   computed: {
     time() {
-      var minsec = this.clock.format('mm:ss');
-      if(minsec == '00:00'){
-        alert('Timeout !!!')
-        window.location.reload()
+      var minsec = this.clock.format("mm:ss");
+      if (minsec == "00:00") {
+        alert("Timeout !!!");
+        window.location.reload();
       }
-      return minsec
+      return minsec;
     },
   },
   methods: {
@@ -117,7 +133,7 @@ export default {
     },
     postUserChoices() {
       this.questionIndex++;
-        axios.post("/quiz/create", {
+      axios.post("/quiz/create", {
         answerId: this.currentAnswer,
         questionId: this.currentQuestion,
         quizId: this.quiz.id,

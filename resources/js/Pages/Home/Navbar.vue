@@ -155,7 +155,7 @@ export default {
     toggleMini: false,
     items: [
       {
-        icon: "mdi-google-analytics",
+        icon: "mdi-quora",
         title: "Quiz",
         path: route("home"),
       },

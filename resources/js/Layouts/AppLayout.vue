@@ -155,27 +155,27 @@ export default {
     items: [
       
       {
-        icon: "mdi-pharmacy",
+        icon: "mdi-quora",
         title: "Quiz",
         path: route('quiz.index'),
       },
       {
-        icon: "mdi-hospital-box",
+        icon: "mdi-head-question-outline",
         title: "Questions",
         path: route('question.index'),
       },
       {
-        icon: "mdi-hospital-box",
+        icon: "mdi-account",
         title: "Users",
         path: route('user.index'),
       },
       {
-        icon: "mdi-hospital-box",
+        icon: "mdi-account-edit",
         title: "Assign Quiz",
         path: route('exam.index'),
       },
       {
-        icon: "mdi-google-analytics",
+        icon: "mdi-alpha-a-circle-outline",
         title: "Results",
         path: route('result'),
       },
