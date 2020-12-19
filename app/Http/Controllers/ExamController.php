@@ -8,6 +8,8 @@ use App\Models\Quiz;
 use App\Models\User;
 use App\Models\Question;
 use App\Models\Result;
+use App\Models\Answer;
+
 use DB;
 
 class ExamController extends Controller
@@ -135,7 +137,7 @@ class ExamController extends Controller
         $quizId = $request['quizId'];
 
         $authuser = auth()->user();
-        $userQuestionAnswer = Result::updateOrCreate(
+        return $userQuestionAnswer = Result::updateOrCreate(
             [
                 'user_id' => $authuser->id,
                 'quiz_id' => $quizId,
@@ -143,16 +145,54 @@ class ExamController extends Controller
             ],
             ['answer_id' => $answerId]
         );
-        return redirect()->back();
+        
     }
     public function viewResult($userId, $quizId){
         $results = Result::where('user_id', $userId)->where('quiz_id', $quizId)->with('question')->with('answer')->get();
         $answers = DB::table('answers')->get();
+        $ans = [];
+        foreach($results as $answer){
+            array_push($ans , $answer->answer->id);
+        }
+        $totalQuestions = Question::where('quiz_id', $quizId)->count();
+        $userCorrectedAnswer = Answer::whereIn('id', $ans)->where('is_correct', 1)->count();
         return Inertia::render('Home/Result', [
             'results' => $results, 
             'answers' => $answers,
+            'totalQuestions' => $totalQuestions,
+            'userCorrectedAnswer' => $userCorrectedAnswer,
             ]);
     }
     
+    public function result(){
+        $quizzes = Quiz::with('users')->get();
+        return Inertia::render('Result/Index', [
+            'quizzes' => $quizzes, 
+            ]);
+    }
+    public function userQuizResult($userId, $quizId){
+        $results = Result::where('user_id', $userId)->where('quiz_id', $quizId)->with('question')->with('answer')->get();
+        $totalQuestions = Question::where('quiz_id', $quizId)->count();
+        $attemptQuestion = Result::where('quiz_id', $quizId)->where('user_id', $userId)->count();
+        $quiz = Quiz::where('id', $quizId)->get();
+        $answers = DB::table('answers')->get();
+        $ans = [];
+        foreach($results as $answer){
+            array_push($ans , $answer->answer->id);
+        }
+        $userCorrectedAnswer = Answer::whereIn('id', $ans)->where('is_correct', 1)->count();
+        $userWrongAnswer = $totalQuestions - $userCorrectedAnswer;
+        $percentage = ($userCorrectedAnswer/$totalQuestions)*100;
+        return Inertia::render('Result/ViewResult', [
+            'results' => $results, 
+            'totalQuestions' => $totalQuestions, 
+            'attemptQuestion' => $attemptQuestion, 
+            'userCorrectedAnswer' => $userCorrectedAnswer, 
+            'userWrongAnswer' => $userWrongAnswer, 
+            'percentage' => $percentage,
+            'quiz' => $quiz,
+            'answers' => $answers,
+            ]);
+    }
 
 }

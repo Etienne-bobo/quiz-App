@@ -153,11 +153,7 @@ export default {
     sidebarMenu: true,
     toggleMini: false,
     items: [
-      {
-        icon: "mdi-google-analytics",
-        title: "Dashboard",
-        path: route('home'),
-      },
+      
       {
         icon: "mdi-pharmacy",
         title: "Quiz",
@@ -177,6 +173,11 @@ export default {
         icon: "mdi-hospital-box",
         title: "Assign Quiz",
         path: route('exam.index'),
+      },
+      {
+        icon: "mdi-google-analytics",
+        title: "Results",
+        path: route('result'),
       },
     ],
     status: 1,

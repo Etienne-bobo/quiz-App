@@ -13,6 +13,7 @@
       </v-snackbar>
     </div>
     <v-main>
+      <v-container>
       <v-row v-if="isExamAssigned" class="mt-6" no-gutters>
         <v-col v-for="(quiz, id) in quizzes" :key="id" cols="12" sm="4">
           <v-card class="mx-auto mb-6" max-width="344">
@@ -58,7 +59,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row class="text-center mx-auto" v-else>
+      <v-row class="text-center mx-auto mt-6" v-else>
           <v-alert border="right" colored-border type="error" elevation="2">
              No quiz is assigned to you ..        
           </v-alert>
@@ -69,6 +70,7 @@
             ></v-skeleton-loader>
           </div>
       </v-row>
+      </v-container>
     </v-main>
   </v-app>
 </template>

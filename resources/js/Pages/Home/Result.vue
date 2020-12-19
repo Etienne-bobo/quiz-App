@@ -2,10 +2,11 @@
   <v-app>
     <navBar />
     <v-main>
-      <v-card class="mx-auto mb-6 mt-6 text-center" max-width="600">
+      <v-card class="mx-auto mb-6 mt-6" max-width="600">
         <div class="pt-4 pb-16">
           <v-card-title class="uppercase"></v-card-title>
-          <span class="font-semibold text-lg">Your Result</span>
+          <div class="font-semibold text-lg text-center">Your Result</div><br>
+          <div class="mx-6">Score: <b>{{userCorrectedAnswer}}/{{totalQuestions}} </b></div>
         </div>
         <v-divider></v-divider>
         <v-card-text
@@ -37,6 +38,13 @@
               {{ result.answer.answer }}</v-btn
             >
           </div>
+          <div v-for="ans in answers" :key="ans">
+              <div v-if="result.answer_id == ans.id && ans.is_correct == 1">
+              <v-btn color="success lighten-2">
+                  correct
+              </v-btn>
+          </div>
+          </div>
         </v-card-text>
       </v-card>
     </v-main>
@@ -48,7 +56,7 @@ import navBar from "./Navbar";
 export default {
   name: "attemptQuiz",
   components: { navBar },
-  props: ["results", "answers"],
+  props: ["results", "answers", "totalQuestions", "userCorrectedAnswer"],
   data() {
     return {};
   },

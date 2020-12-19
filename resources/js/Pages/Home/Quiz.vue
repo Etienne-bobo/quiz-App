@@ -85,7 +85,7 @@ export default {
       userResponses: Array(this.quizQuestions.length).fill(false),
       currentQuestion: 0,
       currentAnswer: 0,
-      clock: moment(this.times*60*1000),
+      clock: moment(this.times*60 * 1000),
     };
   },
   mounted(){
@@ -117,7 +117,7 @@ export default {
     },
     postUserChoices() {
       this.questionIndex++;
-      this.$inertia.post("/quiz/create", {
+        axios.post("/quiz/create", {
         answerId: this.currentAnswer,
         questionId: this.currentQuestion,
         quizId: this.quiz.id,
