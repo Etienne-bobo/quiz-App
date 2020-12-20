@@ -24,7 +24,7 @@
         </div>
         <v-alert
           border="top"
-          class="mx-2"
+          class="mx-2 py-6 text-center"
           colored-border
           type="info"
           elevation="2"

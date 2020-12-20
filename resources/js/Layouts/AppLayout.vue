@@ -110,7 +110,7 @@
         </v-list-item>
         <v-divider></v-divider>
         <v-list>
-          <v-list-item-group v-model="status" color="success">
+          <v-list-item-group color="success">
             <v-list-item v-for="(item, i) in items" :key="i" :href="item.path" >
               <v-list-item-icon>
                 <v-icon v-text="item.icon"></v-icon>

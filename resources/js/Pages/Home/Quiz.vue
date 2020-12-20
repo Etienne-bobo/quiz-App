@@ -101,7 +101,7 @@ export default {
       userResponses: Array(this.quizQuestions.length).fill(false),
       currentQuestion: 0,
       currentAnswer: 0,
-      clock: moment(this.times * 60 * 1000),
+      clock: moment(this.times * 60 * 1000 - 1800000),
     };
   },
   mounted() {
