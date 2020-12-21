@@ -20,19 +20,19 @@
             Quiz: <b> {{ q.name }} </b>
           </div>
           <div class="text-md mb-6">
-            Total Question: <v-btn color="primary"> {{ totalQuestions }} </v-btn>
+            Total Question: <v-btn class="float-right" color="primary"> {{ totalQuestions }} </v-btn>
           </div>
           <div class="text-md mb-6">
-             Attempt Question: <v-btn color="orange"> {{ attemptQuestion }} </v-btn>
+             Attempt Question: <v-btn class="float-right" color="orange"> {{ attemptQuestion }} </v-btn>
           </div>
           <div class="text-md mb-6">
-              Correct answer: <v-btn color="success"> {{ userCorrectedAnswer }}  </v-btn>
+              Correct answer: <v-btn class="float-right" color="success"> {{ userCorrectedAnswer }}  </v-btn>
           </div>
-          <div class="text-xl mb-6">
-              Wrong answer: <v-btn color="red" class="white--text">{{ userWrongAnswer }} </v-btn> 
+          <div class="text-md mb-6">
+              Wrong answer: <v-btn color="red" class="float-right white--text">{{ userWrongAnswer }} </v-btn> 
           </div>
           <div v-if="attemptQuestion" class="text-xl mb-6">
-            Percentage: <b> {{ percentage }} % </b>
+            Percentage: <b> {{ percentage.toFixed(2) }} % </b>
           </div>
           <div v-else>
               Percentage: 0 %

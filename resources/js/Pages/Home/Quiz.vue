@@ -133,7 +133,7 @@ export default {
     },
     postUserChoices() {
       this.questionIndex++;
-      axios.post("/quiz/create", {
+      axios.post("/quiz/test", {
         answerId: this.currentAnswer,
         questionId: this.currentQuestion,
         quizId: this.quiz.id,

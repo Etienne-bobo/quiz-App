@@ -2,8 +2,8 @@
   <v-app>
     <AppLayout />
     <v-main>
-      <div align="center">
-        <v-container>
+      <v-container>
+        <div class="mainSize" align="center">
           <v-alert border="top" colored-border type="info" elevation="2">
             Assign Quiz
           </v-alert>
@@ -17,7 +17,7 @@
               item-text="name"
               label="Select a quiz"
             />
-           <v-select
+            <v-select
               :items="users"
               v-model="form.user_id"
               name="quiz"
@@ -35,8 +35,8 @@
               Assign
             </v-btn>
           </v-form>
-        </v-container>
-      </div>
+        </div>
+      </v-container>
     </v-main>
   </v-app>
 </template>
@@ -76,8 +76,8 @@ export default {
 };
 </script>
 <style scoped>
-div {
-  max-width: 900px;
+.mainSize {
+  max-width: 650px;
   margin: auto;
   margin-top: 20px;
 }

@@ -111,14 +111,56 @@
         <v-divider></v-divider>
         <v-list>
           <v-list-item-group color="success">
-            <v-list-item v-for="(item, i) in items" :key="i" :href="item.path" >
+            <inertia-link :href="route('quiz.index')" class="transition duration-150 ease-in-out">
+            <v-list-item>
               <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
+                <v-icon>mdi-quora</v-icon>
               </v-list-item-icon>
               <v-list-item-content >
-                <v-list-item-title v-text="item.title"></v-list-item-title>
+                <v-list-item-title>Quiz</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
+            </inertia-link>
+            <inertia-link :href="route('question.index')" class="transition duration-150 ease-in-out">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-head-question-outline</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content >
+                <v-list-item-title>Questions</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            </inertia-link>
+            <inertia-link :href="route('user.index')" class="transition duration-150 ease-in-out">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-account</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content >
+                <v-list-item-title>Users</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            </inertia-link>
+            <inertia-link :href="route('exam.index')" class="transition duration-150 ease-in-out">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-account-edit</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content >
+                <v-list-item-title>Assign Exam</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            </inertia-link>
+            <inertia-link :href="route('result')" class="transition duration-150 ease-in-out">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-alpha-a-circle-outline</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content >
+                <v-list-item-title>Results</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            </inertia-link>
           </v-list-item-group>
         </v-list>
         <v-btn
@@ -141,6 +183,16 @@ export default {
     JetDropdown,
     JetDropdownLink,
   },
+  mounted() {
+        const theme = localStorage.getItem("dark\_theme");
+        if (theme) {
+            if (theme == "true") {
+                this.$vuetify.theme.dark = true;
+            } else {
+                this.$vuetify.theme.dark = false;
+            }
+        }
+    },
   computed: {
     mini() {
       return this.$vuetify.breakpoint.smAndDown || this.toggleMini;
@@ -152,39 +204,12 @@ export default {
   data: () => ({
     sidebarMenu: true,
     toggleMini: false,
-    items: [
-      
-      {
-        icon: "mdi-quora",
-        title: "Quiz",
-        path: route('quiz.index'),
-      },
-      {
-        icon: "mdi-head-question-outline",
-        title: "Questions",
-        path: route('question.index'),
-      },
-      {
-        icon: "mdi-account",
-        title: "Users",
-        path: route('user.index'),
-      },
-      {
-        icon: "mdi-account-edit",
-        title: "Assign Quiz",
-        path: route('exam.index'),
-      },
-      {
-        icon: "mdi-alpha-a-circle-outline",
-        title: "Results",
-        path: route('result'),
-      },
-    ],
     status: 1,
   }),
   methods: {
     toggleTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+      localStorage.setItem("dark\_theme", this.$vuetify.theme.dark.toString());
     },
     logout() {
       axios.post(route("logout").url()).then((response) => {
