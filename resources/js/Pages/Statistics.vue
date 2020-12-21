@@ -1,13 +1,11 @@
 <template>
   <v-app>
     <AppLayout />
-
     <v-main>
       <v-container class="mt-6">
         <div v-if="totalNumberOfQuiz.length != 0">
           <v-row no-gutters>
-            <v-col cols="12" sm="4">
-             
+            <v-col cols="12" sm="4">            
                 <v-alert
                   border="left"
                   class="mx-2 py-6 text-center font-semibold"
