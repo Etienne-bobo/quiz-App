@@ -195,4 +195,15 @@ class ExamController extends Controller
             ]);
     }
 
+    public function statistics(){
+        $totalNumberOfQuestions = DB::table('questions')->count();
+        $totalNumberOfQuiz = DB::table('quizzes')->count();
+        $totalNumberOfUsers = User::where('is_admin', '0')->count();
+        return Inertia::render('Statistics', [
+            'totalNumberOfQuestions' => $totalNumberOfQuestions, 
+            'totalNumberOfQuiz' => $totalNumberOfQuiz, 
+            'totalNumberOfUsers' => $totalNumberOfUsers, 
+            ]);
+    }
+
 }

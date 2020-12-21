@@ -111,6 +111,16 @@
         <v-divider></v-divider>
         <v-list>
           <v-list-item-group color="success">
+            <inertia-link :href="route('statistics')" class="transition duration-150 ease-in-out">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-google-analytics</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content >
+                <v-list-item-title>Statistics</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            </inertia-link>
             <inertia-link :href="route('quiz.index')" class="transition duration-150 ease-in-out">
             <v-list-item>
               <v-list-item-icon>

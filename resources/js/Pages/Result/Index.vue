@@ -28,14 +28,25 @@
             <v-col v-for="(user, id) in quiz.users" :key="id" cols="12" sm="4">
               <v-card class="mx-auto mb-6" max-width="344">
                 <v-card-text>
-                  <p class="text-xl text--primary">Quiz: {{ quiz.name }}</p>
-                  <p class="text-xl text--primary">User: {{ user.name }}</p>
+                  <p class="text-md text--primary">
+                    Quiz: <span class="text-xl"> {{ quiz.name }}</span>
+                  </p>
+                  <p class="text-md text--primary">
+                    User: <span class="text-xl"> {{ user.name }}</span>
+                  </p>
                 </v-card-text>
                 <v-card-actions>
                   <v-form>
                     <input type="hidden" :v-model="(quiz_id = quiz.id)" />
                     <input type="hidden" :v-model="(user_id = user.id)" />
-                    <inertia-link :href="route('userQuizResult', { userId:user.id, quizId:quiz.id})">
+                    <inertia-link
+                      :href="
+                        route('userQuizResult', {
+                          userId: user.id,
+                          quizId: quiz.id,
+                        })
+                      "
+                    >
                       <v-btn color="primary" class="white--text"
                         >View Result</v-btn
                       >

@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->get();
+        $users = User::where('is_admin', '0')->latest()->get();
         return Inertia::render('User/Index', ['users' => $users]);
     }
 

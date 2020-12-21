@@ -36,20 +36,28 @@
             <v-col v-for="(user, id) in quiz.users" :key="id" cols="12" sm="4">
               <v-card class="mx-auto mb-6" max-width="344">
                 <v-card-text>
-                  <p class="text-xl text--primary">Quiz: {{ quiz.name }}</p>
-                  <p class="text-xl text--primary">User: {{ user.name }}</p>
+                  <p class="text-md text--primary">
+                    Quiz: <span class="text-xl"> {{ quiz.name }}</span>
+                  </p>
+                  <p class="text-md text--primary">
+                    User: <span class="text-xl">{{ user.name }}</span>
+                  </p>
                 </v-card-text>
                 <v-card-actions>
                   <v-form>
-                    <input type="hidden" :v-model="quiz_id = quiz.id">
-                    <input type="hidden" :v-model="user_id = user.id">
-                    <v-btn color="red lighten-1" class="white--text" @click="destroy({'quiz_id':quiz_id, 'user_id':user.id})">Remove</v-btn>
+                    <input type="hidden" :v-model="(quiz_id = quiz.id)" />
+                    <input type="hidden" :v-model="(user_id = user.id)" />
+                    <v-btn
+                      color="red lighten-1"
+                      class="white--text"
+                      @click="destroy({ quiz_id: quiz_id, user_id: user.id })"
+                      >Remove</v-btn
+                    >
                   </v-form>
                 </v-card-actions>
               </v-card>
             </v-col>
           </v-row>
-          
         </div>
         <div class="text-center mx-auto" v-else>
           <div align="center" class="mx-2">
@@ -91,7 +99,7 @@ export default {
     edit: function (data) {
       this.form = Object.assign({}, data);
     },
-    destroy(quiz_id,user_id) {
+    destroy(quiz_id, user_id) {
       this.$inertia.post("/exam/remove", quiz_id, user_id);
       this.confirmationDialog = false;
     },
