@@ -12,7 +12,7 @@
             Question attempted:{{ questionIndex }}/{{ quizQuestions.length }}
           </div>
           <br />
-          {{ time }}
+          <div class="float-right red--text"> {{ time }} </div>
         </div>
         <v-divider></v-divider>
         <v-card-text
