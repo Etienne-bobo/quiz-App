@@ -96,7 +96,7 @@
               <v-card-title> Delete this Quiz </v-card-title>
               <v-card-text>
                 <p>
-                  This qction will remove definitively
+                  This action will remove definitively
                   <b>{{ quiz.name }}</b> quiz
                 </p>
               </v-card-text>
@@ -143,7 +143,7 @@
           >
             <v-card class="mx-auto mb-6" max-width="344">
               <v-card-text>
-                <p class="display-1 text--primary">
+                <p class="text-md text--primary">
                   {{ question.question }}
                 </p>
               </v-card-text>

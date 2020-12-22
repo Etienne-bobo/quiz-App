@@ -18,7 +18,7 @@
           <v-col v-for="(quiz, id) in quizzes" :key="id" cols="12" sm="4">
             <v-card class="mx-auto mb-6" max-width="344">
               <v-card-text>
-                <p class="text-xl text--primary font-semibold uppercase">
+                <p class="text-md text--primary font-semibold uppercase">
                   {{ quiz.name }}
                 </p>
                 <p class="text-md text--primary">

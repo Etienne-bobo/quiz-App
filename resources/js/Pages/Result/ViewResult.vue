@@ -16,7 +16,7 @@
           v-for="(q, id) in quiz"
           :key="id"
         >
-          <div class="text-xl mb-6">
+          <div class="text-md mb-6">
             Quiz: <b> {{ q.name }} </b>
           </div>
           <div class="text-md mb-6">
@@ -31,7 +31,7 @@
           <div class="text-md mb-6">
               Wrong answer: <v-btn color="red" class="float-right white--text">{{ userWrongAnswer }} </v-btn> 
           </div>
-          <div v-if="attemptQuestion" class="text-xl mb-6">
+          <div v-if="attemptQuestion" class="text-md mb-6">
             Percentage: <b> {{ percentage.toFixed(2) }} % </b>
           </div>
           <div v-else>
@@ -44,7 +44,7 @@
           v-for="(result, id) in results"
           :key="id"
         >
-          <div class="text-xl mb-6">
+          <div class="text-md mb-6">
             {{ id + 1 }} - {{ result.question.question }}
           </div>
           <div v-for="ans in answers" :key="ans">
@@ -52,6 +52,7 @@
               v-if="ans.question_id == result.question_id"
               v-model="ans.answer"
               label="Solo"
+              class="text-sm"
               height="50"
               solo
               readonly

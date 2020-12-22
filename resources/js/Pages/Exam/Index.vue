@@ -29,7 +29,7 @@
           type="info"
           elevation="2"
         >
-          User Quiz
+          User assigned Quiz
         </v-alert>
         <div v-if="quizzes.length != 0">
           <v-row no-gutters v-for="(quiz, id) in quizzes" :key="id">
@@ -37,10 +37,10 @@
               <v-card class="mx-auto mb-6" max-width="344">
                 <v-card-text>
                   <p class="text-md text--primary">
-                    Quiz: <span class="text-xl"> {{ quiz.name }}</span>
+                    Quiz: <span class="text-md"> {{ quiz.name }}</span>
                   </p>
                   <p class="text-md text--primary">
-                    User: <span class="text-xl">{{ user.name }}</span>
+                    User: <span class="text-md">{{ user.name }}</span>
                   </p>
                 </v-card-text>
                 <v-card-actions>
@@ -62,7 +62,7 @@
         <div class="text-center mx-auto" v-else>
           <div align="center" class="mx-2">
             <v-alert border="right" colored-border type="error" elevation="2">
-              User list is empty.<br />
+              Quiz isn't yet assigned to any user.<br />
               Click add button to add one .
             </v-alert>
             <v-skeleton-loader

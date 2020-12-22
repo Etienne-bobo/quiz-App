@@ -21,7 +21,7 @@
           v-for="(result, id) in results"
           :key="id"
         >
-          <div class="text-xl mb-6">
+          <div class="text-md mb-6">
             {{ id + 1 }} - {{ result.question.question }}
           </div>
           <div v-for="ans in answers" :key="ans">
@@ -30,6 +30,7 @@
               v-model="ans.answer"
               label="Solo"
               height="50"
+              class="text-sm"
               solo
               readonly
               rounded

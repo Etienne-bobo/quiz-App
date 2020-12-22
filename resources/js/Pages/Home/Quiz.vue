@@ -12,41 +12,39 @@
             Question attempted:{{ questionIndex }}/{{ quizQuestions.length }}
           </div>
           <br />
-          <div class="float-right red--text"> {{ time }} </div>
+          <div class="float-right red--text">{{ time }}</div>
         </div>
         <v-divider></v-divider>
-        <v-card-text
-          class="px-8"
-          v-for="(question, id) in quizQuestions"
-          :key="id"
-        >
-          <div v-if="id === questionIndex">
-            <p class="text-xl mb-8 text--primary">
-              {{ id + 1 }} : {{ question.question }}
-            </p>
-            <v-text-field
-              v-for="choice in question.answers"
-              :key="choice"
-              v-model="choice.answer"
-              label="Solo"
-              height="50"
-              solo
-              readonly
-              rounded
-            >
-              <template v-slot:prepend-inner>
-                <v-radio-group v-model="userResponses[id]">
-                  <v-radio
-                    :value="choice.is_correct == true ? true : choice.answer"
-                    name="id"
-                    @click="choices(question.id, choice.id)"
-                  ></v-radio>
-                </v-radio-group>
-              </template>
-            </v-text-field>
-          </div>
+        <v-card-text class="px-8">
+          <span v-for="(question, id) in quizQuestions" :key="id">
+            <span v-if="id === questionIndex">
+              <p class="text-md mb-8 text--primary">
+                {{ id + 1 }} : {{ question.question }}
+              </p>
+              <v-text-field
+                v-for="choice in question.answers"
+                :key="choice"
+                v-model="choice.answer"
+                label="Solo"
+                height="50"
+                solo
+                readonly
+                rounded
+              >
+                <template v-slot:prepend-inner>
+                  <v-radio-group v-model="userResponses[id]">
+                    <v-radio
+                       
+                      :value="choice.is_correct == true ? true : choice.answer"
+                      name="id"
+                      @click="choices(question.id, choice.id)"
+                    ></v-radio>
+                  </v-radio-group>
+                </template>
+              </v-text-field>
+            </span>
+          </span>
         </v-card-text>
-
         <div class="mb-16 px-6" v-if="questionIndex != quizQuestions.length">
           <v-btn
             v-if="questionIndex > 0"

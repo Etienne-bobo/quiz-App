@@ -23,7 +23,7 @@
         </v-btn>
         <v-flex xs12 sm12 md12 lg9 class="mt-6">
           <div class="mt-6 mr-lg-12">
-            <p class="display-1 font-weight-bold">
+            <p class="text-md font-weight-bold">
               {{ question.question
               }}<span
                 ><v-icon
@@ -90,7 +90,7 @@
         <v-row justify="center">
           <v-dialog v-model="confirmationDialog" persistent max-width="600px">
             <v-card>
-              <v-card-title> Delete this Quiz </v-card-title>
+              <v-card-title> Delete this Question </v-card-title>
               <v-card-text>
                 <p>
                   This action will remove definitively
@@ -131,7 +131,7 @@
           >
             <v-card class="mx-auto mb-6" max-width="344">
               <v-card-text>
-                <p class="text-xl text--primary">
+                <p class="text-md text--primary">
                   {{ id + 1 }} - {{ answer.answer }}
                 </p>
               </v-card-text>

@@ -47,7 +47,7 @@
             <div class="items-center">
 
 
-                    <h1 class=" font-bold text-4xl text-gray-900 text-center">Online Test app</h1>
+                    <h1 class=" font-bold text-4xl text-gray-900 text-center">Online Examination System</h1>
                     <p class="text-center text-gray-800 mt-8 font-semibold">Take Online test in any subject more easily</p>
 
 

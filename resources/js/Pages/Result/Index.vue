@@ -29,10 +29,10 @@
               <v-card class="mx-auto mb-6" max-width="344">
                 <v-card-text>
                   <p class="text-md text--primary">
-                    Quiz: <span class="text-xl"> {{ quiz.name }}</span>
+                    Quiz: <span class="text-md"> {{ quiz.name }}</span>
                   </p>
                   <p class="text-md text--primary">
-                    User: <span class="text-xl"> {{ user.name }}</span>
+                    User: <span class="text-md"> {{ user.name }}</span>
                   </p>
                 </v-card-text>
                 <v-card-actions>
@@ -60,8 +60,7 @@
         <div class="text-center mx-auto" v-else>
           <div align="center" class="mx-2">
             <v-alert border="right" colored-border type="error" elevation="2">
-              User list is empty.<br />
-              Click add button to add one .
+              No result is yet available.
             </v-alert>
             <v-skeleton-loader
               v-bind="attrs"

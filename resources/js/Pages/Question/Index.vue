@@ -35,7 +35,7 @@
               <v-col v-for="(question, id) in questions" :key="id" cols="12" sm="4">
                 <v-card class="mx-auto mb-6" max-width="344">
                   <v-card-text>
-                    <p class="text-2xl text--primary">
+                    <p class="text-md font-semibold text--primary">
                       {{ question.question }}
                     </p>
                     <p v-if="question.quiz" class="text--primary">
@@ -55,7 +55,7 @@
         <v-row class="text-center mx-auto" v-else>
           <div align="center" class="mx-2">
             <v-alert border="right" colored-border type="error" elevation="2">
-              Quiz list is empty.<br />
+              Question list is empty.<br />
               Click add button to add one .
             </v-alert>
             <v-skeleton-loader
