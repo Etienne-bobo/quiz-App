@@ -11,3 +11,5 @@ run the following commands:
     php artisan serve
     
     npm run watch
+
+    php artisan db:seed
